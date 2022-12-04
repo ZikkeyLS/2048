@@ -19,26 +19,35 @@ public class TouchInput : MonoBehaviour
     {
         LeanTouch.OnFingerInactive += (finger) => 
         {
-            Direction direction = Direction.none;
-            Vector2 scaledDelta = finger.SwipeScaledDelta;
-
-            if (Mathf.Abs(scaledDelta.x) > Mathf.Abs(scaledDelta.y))
+            if(GlobalData.InMenu == false)
             {
-                if (scaledDelta.x > 0)
-                    direction = Direction.right;
-                else if (scaledDelta.x < 0)
-                    direction = Direction.left;
-            }
-            else if (Mathf.Abs(scaledDelta.x) < Mathf.Abs(scaledDelta.y))
-            {
-                if (scaledDelta.y > 0)
-                    direction = Direction.top;
-                else if (scaledDelta.y < 0)
-                    direction = Direction.bottom;
-            }
+                Direction direction = Direction.none;
+                Vector2 scaledDelta = finger.SwipeScaledDelta;
 
-            if (direction != Direction.none)
-                _content.Swipe(direction);
+                float xAbs = Mathf.Abs(scaledDelta.x);
+                float yAbs = Mathf.Abs(scaledDelta.y);
+
+                if(xAbs > 50 || yAbs > 50)
+                {
+                    if (xAbs > yAbs)
+                    {
+                        if (scaledDelta.x > 0)
+                            direction = Direction.right;
+                        else if (scaledDelta.x < 0)
+                            direction = Direction.left;
+                    }
+                    else if (xAbs < yAbs)
+                    {
+                        if (scaledDelta.y > 0)
+                            direction = Direction.top;
+                        else if (scaledDelta.y < 0)
+                            direction = Direction.bottom;
+                    }
+
+                    if (direction != Direction.none)
+                        _content.Swipe(direction);
+                }
+            }
         };
     }
 }

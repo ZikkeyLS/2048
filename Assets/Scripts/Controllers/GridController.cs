@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +10,8 @@ public class GridController : MonoBehaviour
     [SerializeField] private ScoreView _scoreView;
     [SerializeField] private StatusScreenView _statusScreenView;
 
+    [SerializeField] private SwipeSound _swipeSound;
+
     [SerializeField] private Swipes _swipes;
     [SerializeField] private Image _blockPrefab;
 
@@ -19,7 +20,9 @@ public class GridController : MonoBehaviour
 
     private int _score = 0;
     private int _moves = 0;
+
     private bool _loseEmulated = false;
+    private bool _winEmulated = false;
 
     private void Awake()
     {
@@ -34,22 +37,24 @@ public class GridController : MonoBehaviour
         _score = 0;
         _moves = 0;
         _loseEmulated = false;
-        
-        for(int x = 0; x < 4; x++)
-            for(int y = 0; y < 4; y++)
-            {
-                BlockModel block = Blocks[x, y];
+        _winEmulated = false;
 
-                block.SetContainsBlock(false);
-                block.SetValue(0);
-            }
+        ClearBlocks();
 
         GenerateRandomGrid();
 
         _statusScreenView.RemoveLoseScreen();
         _statusScreenView.RemoveWinScreen();
+
         _scoreView.UpdateUI(_score);
         _view.UpdateUI(Blocks, _blockPrefab);
+    }
+
+    public void ClearBlocks()
+    {
+        for (int x = 0; x < 4; x++)
+            for (int y = 0; y < 4; y++)
+                ClearBlock(Blocks[x, y]);
     }
 
     public void ClearBlock(BlockModel block)
@@ -98,8 +103,11 @@ public class GridController : MonoBehaviour
                 break;
         }
 
-        if(status)
+        if (status)
+        {
+            _swipeSound.Play();
             _moves += 1;
+        }
 
         if (status && UsedSlotsCount() != 16)
             GenerateRandomBlock();
@@ -127,8 +135,11 @@ public class GridController : MonoBehaviour
                 if (block.ContainsBlock && block.Value == 0)
                     ClearBlock(block);
 
-                if (block.ContainsBlock && block.Value == 2048)
+                if (block.ContainsBlock && block.Value == 2048 && _winEmulated == false)
+                {
                     _statusScreenView.ShowWinScreen(_score);
+                    _winEmulated = true;
+                }
             }
     }
 

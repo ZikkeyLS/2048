@@ -10,7 +10,7 @@ public class StatusScreenView : MonoBehaviour
     [SerializeField] private Vector2 _panelRelocationPoint;
 
     [SerializeField] private float _moveTime = 2;
-    [SerializeField] private float _removeScreenDelay = 3;
+    [SerializeField] private float _removeScreenDelay = 7;
 
     public void ShowWinScreen(int moves)
     {
