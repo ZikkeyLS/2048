@@ -14,6 +14,7 @@ public class TouchInput : MonoBehaviour
 
     [SerializeField] private GridController _content;
     [SerializeField] private LeanTouch _touch;
+    [SerializeField] private float _initialSensitivity;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class TouchInput : MonoBehaviour
                 float xAbs = Mathf.Abs(scaledDelta.x);
                 float yAbs = Mathf.Abs(scaledDelta.y);
 
-                if(xAbs > 50 || yAbs > 50)
+                if(xAbs > _initialSensitivity || yAbs > _initialSensitivity)
                 {
                     if (xAbs > yAbs)
                     {
