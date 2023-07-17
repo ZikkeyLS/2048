@@ -69,18 +69,19 @@ public class GridController : MonoBehaviour
         {
             block.MultiplyValue(2);
             _score += block.Value;
-
-            block.SetPreviousBlock(previousBlock);
-            ClearBlock(previousBlock);
         }
         else
         {
+            // Check because of weird glitch, idk why it's happening
+            if (previousBlock.Value == 0)
+                return;
+
             block.SetValue(previousBlock.Value);
             block.SetContainsBlock(true);
-
-            block.SetPreviousBlock(previousBlock);
-            ClearBlock(previousBlock);
         }
+
+        block.SetPreviousBlock(previousBlock);
+        ClearBlock(previousBlock);
     }
 
     public void Swipe(TouchInput.Direction direction)
@@ -124,16 +125,12 @@ public class GridController : MonoBehaviour
         }
     }
 
-    // Костыль, один раз появился блок со значением 0, так что на всякий
     private void TryShowWinScreen()
     {
         for (int x = 0; x < 4; x++)
             for (int y = 0; y < 4; y++)
             {
                 BlockModel block = Blocks[x, y];
-
-                if (block.ContainsBlock && block.Value == 0)
-                    ClearBlock(block);
 
                 if (block.ContainsBlock && block.Value == 2048 && _winEmulated == false)
                 {
