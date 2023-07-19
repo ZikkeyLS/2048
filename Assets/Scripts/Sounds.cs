@@ -1,10 +1,30 @@
 using UnityEngine;
 
-public class SwipeSound : MonoBehaviour
+public class Sounds : MonoBehaviour
 {
+    public static Sounds Instance;
+
     [SerializeField] private AudioClip _swipeSound;
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioSource _soundTrack;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Debug.LogWarning($"Already have instance of {nameof(Sounds)}");
+    }
+
+    public void PauseMusic()
+    {
+        _soundTrack.Pause();
+    }
+
+    public void UnPauseMusic()
+    {
+        _soundTrack.UnPause();
+    }
 
     public void Play()
     {

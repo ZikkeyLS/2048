@@ -1,3 +1,4 @@
+using Agava.YandexGames;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class GridController : MonoBehaviour
     [SerializeField] private ScoreView _scoreView;
     [SerializeField] private StatusScreenView _statusScreenView;
 
-    [SerializeField] private SwipeSound _swipeSound;
+    [SerializeField] private Sounds _swipeSound;
 
     [SerializeField] private Swipes _swipes;
     [SerializeField] private Image _blockPrefab;
@@ -18,8 +19,11 @@ public class GridController : MonoBehaviour
     [SerializeField] private int _possibilityToGenerate = 8;
     [SerializeField] private int _maximumGenerationIndex = 10;
 
+    private const int GamesTillAd = 2;
+
     private int _score = 0;
     private int _moves = 0;
+    private int _gamesTillAd = 0;
 
     private bool _loseEmulated = false;
     private bool _winEmulated = false;
@@ -27,13 +31,23 @@ public class GridController : MonoBehaviour
     private void Awake()
     {
         _view = GetComponent<GridView>();
-
+        _gamesTillAd = GamesTillAd;
+        
         InitializeBlocks();
         GenerateRandomGrid();
     }
 
     public void RestartGame()
     {
+        if (_score > GlobalData.MaxScore)
+        {
+            GlobalData.MaxScore = _score;
+
+#if !UNITY_EDITOR
+            Leaderboard.SetScore("ScoreTable", GlobalData.MaxScore, () => { _scoreView.UpdateRank(); });
+#endif
+        }
+
         _score = 0;
         _moves = 0;
         _loseEmulated = false;
@@ -48,6 +62,16 @@ public class GridController : MonoBehaviour
 
         _scoreView.UpdateUI(_score);
         _view.UpdateUI(Blocks, _blockPrefab);
+
+#if !UNITY_EDITOR
+        _gamesTillAd -= 1;
+
+        if (_gamesTillAd == 0)
+        {
+            InterstitialAd.Show(() => { Sounds.Instance.PauseMusic(); }, (arg) => { Sounds.Instance.UnPauseMusic(); });
+            _gamesTillAd = GamesTillAd;
+        }
+#endif
     }
 
     public void ClearBlocks()
