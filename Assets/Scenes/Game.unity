@@ -1382,6 +1382,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winScreen: {fileID: 2639124}
   _loseScreen: {fileID: 2087888524}
+  _winUnique:
+    _ru:
+      Format: "\u041F\u043E\u0437\u0434\u0440\u0430\u0432\u043B\u044F\u0435\u043C,
+        \u0432\u044B \u0432\u044B\u0438\u0433\u0440\u0430\u043B\u0438!\n2048 \u043E\u0447\u043A\u043E\u0432
+        \u0437\u0430 {} \u0445\u043E\u0434\u0430"
+    _en:
+      Format: 'Congratulations, you have won!
+
+        2048 points per {} turns'
+    _tr:
+      Format: "Tebrikler, kazand\u0131n\u0131z!\n{} hamleleri i\xE7in 2048 puan"
+  _loseUnique:
+    _ru:
+      Format: "\u0412\u044B \u043F\u0440\u043E\u0438\u0433\u0440\u0430\u043B\u0438!\n{}
+        \u043E\u0447\u043A\u043E\u0432 \u0437\u0430 {} \u0445\u043E\u0434\u0430"
+    _en:
+      Format: 'You''ve lost!
+
+        {} points within {} moves'
+    _tr:
+      Format: "Kaybettiniz!\nhamleler i\xE7in {} puanlar\u0131 {}"
   _panelRelocationStartPoint: {x: 0, y: 1000}
   _panelRelocationPoint: {x: 0, y: 375}
   _moveTime: 2
@@ -1398,6 +1419,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683519d3b3aa6df4faf5c561357f71e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rankUnique:
+    _ru:
+      Format: "\u0420\u0430\u043D\u0433 #{}"
+    _en:
+      Format: Rank #{}
+    _tr:
+      Format: "R\xFCtbe #{}"
+  _scoreUnique:
+    _ru:
+      Format: "\u0421\u0447\u0451\u0442:\n{}"
+    _en:
+      Format: 'Score:
+
+        {}'
+    _tr:
+      Format: 'Hesap:
+
+        {}'
+  _maxScoreUnique:
+    _ru:
+      Format: "\u041B\u0443\u0447\u0448\u0438\u0439:\n{}"
+    _en:
+      Format: 'Max:
+
+        {}'
+    _tr:
+      Format: 'Azami:
+
+        {}'
   _rank: {fileID: 1303482338}
   _score: {fileID: 1035678560}
   _maxScore: {fileID: 1300175129}
@@ -2238,6 +2288,7 @@ GameObject:
   - component: {fileID: 965872028}
   - component: {fileID: 965872027}
   - component: {fileID: 965872031}
+  - component: {fileID: 965872032}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2340,7 +2391,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37713233ffee77447aab83e769e8d122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _localization: {fileID: 965872032}
   _view: {fileID: 605469122}
+--- !u!114 &965872032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965872026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bd7e235ec92c5847a9caa429f1650ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1035678558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2463,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Current: 0'
+  m_text: "\u0421\u0447\u0451\u0442:\n0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2426,7 +2490,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 48.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3194,7 +3258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Max: 0'
+  m_text: "\u041B\u0443\u0447\u0448\u0438\u0439:\n0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3221,7 +3285,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 48.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3329,7 +3393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rank #0
+  m_text: "\u0420\u0430\u043D\u0433 #0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3669,6 +3733,7 @@ GameObject:
   - component: {fileID: 1524412166}
   - component: {fileID: 1524412168}
   - component: {fileID: 1524412167}
+  - component: {fileID: 1524412169}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3793,6 +3858,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524412165}
   m_CullTransparentMesh: 1
+--- !u!114 &1524412169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524412165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d67e29cd9b6344095115b0b14f1066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ru:
+    Format: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
+  _en:
+    Format: Settings
+  _tr:
+    Format: Ayarlar
 --- !u!1001 &1610558996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3966,7 +4049,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A: Zikkey"
+  m_text: 01Games
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

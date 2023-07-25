@@ -39,14 +39,7 @@ public class GridController : MonoBehaviour
 
     public void RestartGame()
     {
-        if (_score > GlobalData.MaxScore)
-        {
-            GlobalData.MaxScore = _score;
-
-#if !UNITY_EDITOR
-            Leaderboard.SetScore("ScoreTable", GlobalData.MaxScore, () => { _scoreView.UpdateRank(); });
-#endif
-        }
+        TryUpdateScore();
 
         _score = 0;
         _moves = 0;
@@ -87,25 +80,21 @@ public class GridController : MonoBehaviour
         block.SetContainsBlock(false);
     }
 
-    public void MoveBlock(bool connect, BlockModel previousBlock, BlockModel block)
+    public void MoveBlock(bool connect, BlockModel from, BlockModel to)
     {
         if (connect)
         {
-            block.MultiplyValue(2);
-            _score += block.Value;
+            to.MultiplyValue(2);
+            _score += to.Value;
         }
         else
         {
-            // Check because of weird glitch, idk why it's happening
-            if (previousBlock.Value == 0)
-                return;
-
-            block.SetValue(previousBlock.Value);
-            block.SetContainsBlock(true);
+            to.SetValue(from.Value);
+            to.SetContainsBlock(true);
         }
 
-        block.SetPreviousBlock(previousBlock);
-        ClearBlock(previousBlock);
+        to.SetPreviousBlock(from);
+        ClearBlock(from);
     }
 
     public void Swipe(TouchInput.Direction direction)
@@ -144,6 +133,7 @@ public class GridController : MonoBehaviour
 
         if (UsedSlotsCount() == 16 && _swipes.HasAnyMoves() == false && _loseEmulated == false)
         {
+            TryUpdateScore();
             _statusScreenView.ShowLoseScreen(_moves, _score);
             _loseEmulated = true;
         }
@@ -158,10 +148,23 @@ public class GridController : MonoBehaviour
 
                 if (block.ContainsBlock && block.Value == 2048 && _winEmulated == false)
                 {
+                    TryUpdateScore();
                     _statusScreenView.ShowWinScreen(_score);
                     _winEmulated = true;
                 }
             }
+    }
+
+    private void TryUpdateScore()
+    {
+        if (_score > GlobalData.MaxScore)
+        {
+            GlobalData.MaxScore = _score;
+
+#if !UNITY_EDITOR
+            Leaderboard.SetScore("ScoreTable", GlobalData.MaxScore, () => { _scoreView.UpdateRank(); });
+#endif
+        }
     }
 
     private void InitializeBlocks()

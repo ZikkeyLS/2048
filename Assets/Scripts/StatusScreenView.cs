@@ -6,6 +6,9 @@ public class StatusScreenView : MonoBehaviour
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _loseScreen;
 
+    [SerializeField] private LocalizedUnique _winUnique;
+    [SerializeField] private LocalizedUnique _loseUnique;
+
     [SerializeField] private Vector2 _panelRelocationStartPoint;
     [SerializeField] private Vector2 _panelRelocationPoint;
 
@@ -16,7 +19,7 @@ public class StatusScreenView : MonoBehaviour
     {
         LeanTween.moveLocal(_winScreen, _panelRelocationPoint, _moveTime);
 
-        _winScreen.GetComponentInChildren<TMPro.TMP_Text>().text = $"Поздравляем, вы выиграли! \n 2048 очков за {moves} хода";
+        _winScreen.GetComponentInChildren<TMPro.TMP_Text>().text = _winUnique.Result(moves);
 
         StartCoroutine(RemoveWinScreenWithDelay());
     }
@@ -37,7 +40,7 @@ public class StatusScreenView : MonoBehaviour
     {
         LeanTween.moveLocal(_loseScreen, _panelRelocationPoint, _moveTime);
 
-        _loseScreen.GetComponentInChildren<TMPro.TMP_Text>().text = $"Вы проиграли! \n {score} очков за {moves} хода";
+        _loseScreen.GetComponentInChildren<TMPro.TMP_Text>().text = _loseUnique.Result(score, moves);
     }
 
     public void RemoveLoseScreen()

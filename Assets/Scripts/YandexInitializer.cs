@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class YandexInitializer : MonoBehaviour
 {
+    [SerializeField] private YandexLocalization _localization;
     [SerializeField] private ScoreView _view;
 
     private IEnumerator Start()
@@ -16,6 +17,8 @@ public class YandexInitializer : MonoBehaviour
             yield break;
 
         yield return YandexGamesSdk.Initialize();
+
+        _localization.Intitialize();
 
         Leaderboard.GetPlayerEntry("ScoreTable", (result) =>
         {
@@ -32,5 +35,4 @@ public class YandexInitializer : MonoBehaviour
 
         StickyAd.Show();
     }
-
 }
