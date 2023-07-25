@@ -88,7 +88,11 @@ public class GridController : MonoBehaviour
             _score += to.Value;
         }
         else
-        {
+        {   
+            // Check because of weird glitch, idk why it's happening
+            if (from.Value == 0)
+                return;
+
             to.SetValue(from.Value);
             to.SetContainsBlock(true);
         }

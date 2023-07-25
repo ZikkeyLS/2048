@@ -10,8 +10,8 @@ public class Swipes : MonoBehaviour
         bool success = false;
 
         for (int r = 0; r < 4; r++)
-            for (int x = 0; x < 4; x++)
-                for (int y = 0; y < 4; y++)
+            for (int x = 3; x >= 0; x--)
+                for (int y = 3; y >= 0; y--)
                 {
                     BlockModel block = _controller.Blocks[x, y];
 
@@ -120,8 +120,8 @@ public class Swipes : MonoBehaviour
         bool success = false;
 
         for (int r = 0; r < 4; r++)
-            for (int x = 0; x < 4; x++)
-                for (int y = 0; y < 4; y++)
+            for (int x = 3; x >= 0; x--)
+                for (int y = 3; y >= 0; y--)
                 {
                     BlockModel block = _controller.Blocks[x, y];
 
