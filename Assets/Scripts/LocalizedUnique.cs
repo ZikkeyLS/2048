@@ -12,7 +12,7 @@ public class LocalizedUnique
     public string Result(params object[] parameters)
     {
         if (YandexLocalization.Initialized == false)
-            return "Language is not initialized";
+            return "";
 
         Dictionary<LanguageYandex, LocalizedValue> _parsedLocalization = new()
         {
